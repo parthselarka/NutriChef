@@ -5,6 +5,7 @@ import { ArrowRight, Mail, Twitter, Instagram } from "lucide-react";
 import { useState } from "react";
 import { addToWaitlist } from "../lib/waitlist";
 import Image from "next/image";
+import Link from "next/link";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -201,6 +202,22 @@ export function Footer() {
                   >
                     Roadmap
                   </a>
+                </li>
+                <li>
+                  <Link
+                    href="/support"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Support
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    href="/privacy-policy"
+                    className="hover:text-foreground transition-colors"
+                  >
+                    Privacy Policy
+                  </Link>
                 </li>
               </ul>
             </div>

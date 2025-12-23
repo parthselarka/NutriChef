@@ -2,12 +2,13 @@
 
 import { ThemeToggle } from "./ThemeToggle";
 import Image from "next/image";
+import Link from "next/link";
 
 export function Header() {
   return (
     <header className="fixed top-0 left-0 right-0 z-50 border-b bg-background/80 backdrop-blur-sm">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-        <div className="flex items-center">
+        <Link href="/" className="flex items-center">
           <Image
             src="/logos/nutrichef-ai-high-resolution-logo-transparent.png"
             alt="Nutrichef Logo"
@@ -15,7 +16,7 @@ export function Header() {
             height={40}
             className="h-8 w-auto"
           />
-        </div>
+        </Link>
 
         <nav className="hidden md:flex items-center space-x-8">
           <a
