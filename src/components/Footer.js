@@ -24,7 +24,7 @@ export function Footer() {
         "footer",
         navigator.userAgent,
         // IP address will be handled server-side if needed
-        ""
+        "",
       );
 
       if (result.success) {
@@ -83,7 +83,10 @@ export function Footer() {
             <div className="max-w-lg mx-auto mb-8">
               {!isSubmitted ? (
                 <>
-                  <form onSubmit={handleSubmit} className="flex gap-4">
+                  <form
+                    onSubmit={handleSubmit}
+                    className="flex flex-col sm:flex-row gap-4"
+                  >
                     <input
                       type="email"
                       value={email}
@@ -96,7 +99,7 @@ export function Footer() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className="bg-primary text-primary-foreground px-8 py-4 rounded-lg hover:bg-primary/90 transition-colors font-medium flex items-center space-x-2 whitespace-nowrap disabled:opacity-50"
+                      className="bg-primary text-primary-foreground px-8 py-4 rounded-lg hover:bg-primary/90 transition-colors font-medium flex items-center justify-center space-x-2 disabled:opacity-50"
                     >
                       <span>
                         {isLoading ? "Joining..." : "Get Early Access"}
