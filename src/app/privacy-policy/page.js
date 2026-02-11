@@ -35,7 +35,7 @@ export default function PrivacyPolicy() {
 
             <div className="prose prose-slate dark:prose-invert max-w-none bg-card border border-border rounded-2xl p-8 md:p-12 shadow-sm">
               <p className="text-muted-foreground mb-8">
-                <strong>Effective date:</strong> December 23, 2025
+                <strong>Effective date:</strong> February 11, 2026
               </p>
 
               <p className="text-lg mb-8">
@@ -164,13 +164,29 @@ export default function PrivacyPolicy() {
                     <p className="text-muted-foreground">
                       We may collect limited usage analytics and
                       crash/diagnostic data to improve reliability and
-                      performance. If we do, it is used for:
+                      performance.
                     </p>
-                    <ul className="list-disc pl-6 text-muted-foreground">
-                      <li>App performance monitoring</li>
-                      <li>Bug fixing</li>
-                      <li>Improving core features</li>
-                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2 text-foreground">
+                      G. Advertising and tracking (if enabled)
+                    </h3>
+                    <p className="text-muted-foreground">
+                      We may use third-party advertising and measurement
+                      partners (for example, Meta/Facebook) to measure ad
+                      performance (such as app installs) and improve marketing.
+                      If enabled, these partners may collect device identifiers
+                      (such as advertising IDs) and usage data (such as product
+                      interaction and advertising data) for advertising
+                      measurement purposes.
+                    </p>
+                    <p className="text-muted-foreground mt-2">
+                      On iOS, we will request your permission before using data
+                      for tracking where required by Apple’s App Tracking
+                      Transparency framework. You can decline or change your
+                      choice at any time in your device settings.
+                    </p>
                   </div>
                 </div>
               </section>
@@ -200,6 +216,9 @@ export default function PrivacyPolicy() {
                     Improve the app (e.g., debugging, performance, feature
                     improvements)
                   </li>
+                  <li>
+                    Measure marketing performance and app installs (if enabled)
+                  </li>
                 </ul>
               </section>
 
@@ -222,6 +241,12 @@ export default function PrivacyPolicy() {
                   <li>
                     Subscription services (Apple and RevenueCat) for purchase
                     verification and entitlement management
+                  </li>
+                  <li>
+                    Advertising/measurement partners (if enabled) to measure ad
+                    performance (for example, app installs). These partners may
+                    receive device identifiers and usage data for advertising
+                    measurement purposes.
                   </li>
                   <li>
                     Legal requirements if required by law or to protect rights,
@@ -279,6 +304,11 @@ export default function PrivacyPolicy() {
                   <li>
                     Subscription management: Subscriptions are managed through
                     your Apple ID settings in iOS.
+                  </li>
+                  <li>
+                    If you are on iOS, you can control tracking permission in
+                    your device settings (Settings → Privacy &amp; Security →
+                    Tracking).
                   </li>
                 </ul>
               </section>
