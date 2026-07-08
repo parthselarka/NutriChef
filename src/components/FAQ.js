@@ -1,57 +1,56 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import * as Accordion from "@radix-ui/react-accordion";
 import Script from "next/script";
+import { CONTACT_EMAIL } from "../lib/links";
+
+const FAQS = [
+  {
+    question: "Is NutriChef available right now?",
+    answer:
+      "Yes — NutriChef is live on the App Store for iPhone. An Android version is in development; join the waitlist and you’ll be emailed when it’s ready.",
+  },
+  {
+    question: "How does the photo recognition work?",
+    answer:
+      "Point your camera at your plate and the AI identifies the dish, along with a confidence score so you know how sure it is. You then confirm the portion — quarter, half, three-quarters, full, or exact grams — before the meal is logged. Every value is an estimate you can edit.",
+  },
+  {
+    question: "Does it work for home-cooked Indian food?",
+    answer:
+      "Yes. NutriChef is designed around Indian meals, including home cooking that has no barcode or menu entry. Snap the plate, adjust the portion, and log it.",
+  },
+  {
+    question: "Is it free?",
+    answer:
+      "NutriChef is free to download, and core tracking is free to use. Some advanced features may be offered as paid upgrades as the app grows.",
+  },
+  {
+    question: "Does it support vegetarian, vegan, or Jain diets?",
+    answer:
+      "Yes. Indian vegetarian cuisine is core to the app, and vegan and Jain eating patterns are supported too.",
+  },
+  {
+    question: "What happens to my data?",
+    answer:
+      "Your health data is stored securely and is never shared with third parties. The full details are in the privacy policy.",
+  },
+  {
+    question: "When is Android coming?",
+    answer:
+      "It’s in development. We’re not promising a date we can’t keep — waitlist members hear first the moment it ships.",
+  },
+];
 
 export function FAQ() {
-  const faqs = [
-    {
-      question: "When will Nutrichef be available?",
-      answer:
-        "We're currently in MVP development. Early access will begin in Q2 2025 for waitlist members. Full launch is planned for later in 2025.",
-    },
-    {
-      question: "Will it work for all types of Indian food?",
-      answer:
-        "Yes! Our database covers North Indian, South Indian, regional specialties, street food, and home-cooked meals. We're continuously expanding based on user feedback.",
-    },
-    {
-      question: "How accurate is the photo recognition?",
-      answer:
-        "Our AI has been specifically trained on Indian cuisine with over 10,000 dish images. Accuracy improves with each use, and you can always manually adjust portions.",
-    },
-    {
-      question: "Is it free to use?",
-      answer:
-        "We'll have a free tier with basic features. Premium features like detailed analytics, meal planning, and community access will be available via subscription.",
-    },
-    {
-      question: "Does it support vegetarian/vegan diets?",
-      answer:
-        "Absolutely! Indian vegetarian cuisine is core to our database. We also support vegan, Jain, and other dietary preferences common in India.",
-    },
-    {
-      question: "Can I track homemade food?",
-      answer:
-        "Yes! Our AI recognizes homemade Indian dishes. You can also create custom recipes and track family recipes passed down through generations.",
-    },
-    {
-      question: "Will my data be secure?",
-      answer:
-        "Privacy is paramount. Your health data is encrypted and stored securely. We never share personal information with third parties.",
-    },
-    {
-      question: "Do you support multiple Indian languages?",
-      answer:
-        "Currently in English, but we're planning Hindi support in the first update, followed by other regional languages based on user demand.",
-    },
-  ];
-
   return (
-    <section className="py-20 bg-muted/30">
-      <div className="container mx-auto px-4">
+    <section
+      id="faq"
+      className="section scroll-mt-16"
+      aria-labelledby="faq-heading"
+    >
+      <div className="container-page">
         <Script
           id="ld-json-faq"
           type="application/ld+json"
@@ -60,7 +59,7 @@ export function FAQ() {
           {JSON.stringify({
             "@context": "https://schema.org",
             "@type": "FAQPage",
-            mainEntity: faqs.map((f) => ({
+            mainEntity: FAQS.map((f) => ({
               "@type": "Question",
               name: f.question,
               acceptedAnswer: {
@@ -70,81 +69,52 @@ export function FAQ() {
             })),
           })}
         </Script>
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold mb-6">
-            Frequently Asked <span className="text-primary">Questions</span>
-          </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Got questions? We've got answers. If you don't see your question
-            here, feel free to reach out!
-          </p>
-        </motion.div>
 
-        <div className="max-w-3xl mx-auto">
-          <Accordion.Root
-            type="single"
-            defaultValue="item-0"
-            collapsible
-            className="space-y-4"
+        <div className="max-w-2xl">
+          <p className="eyebrow reveal">Questions</p>
+          <h2
+            id="faq-heading"
+            className="reveal mt-4 font-display text-3xl font-bold tracking-tight sm:text-4xl"
           >
-            {faqs.map((faq, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <Accordion.Item
-                  value={`item-${index}`}
-                  className="bg-background border border-border rounded-lg overflow-hidden transition-all duration-200 hover:shadow-md hover:border-primary/20"
-                >
-                  <Accordion.Header>
-                    <Accordion.Trigger className="w-full p-6 text-left hover:bg-muted/50 transition-all duration-200 group flex justify-between items-center data-[state=open]:bg-muted/30">
-                      <h3 className="text-lg font-semibold pr-4 group-data-[state=open]:text-primary transition-colors duration-200">
-                        {faq.question}
-                      </h3>
-                      <ChevronDown className="w-5 h-5 text-muted-foreground group-data-[state=open]:text-primary group-data-[state=open]:rotate-180 transition-all duration-300 ease-out flex-shrink-0" />
-                    </Accordion.Trigger>
-                  </Accordion.Header>
-                  <Accordion.Content className="data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden">
-                    <div className="px-6 pb-6 pt-0 accordion-content">
-                      <div className="pt-4 border-t border-border/50">
-                        <p className="text-muted-foreground leading-relaxed">
-                          {faq.answer}
-                        </p>
-                      </div>
-                    </div>
-                  </Accordion.Content>
-                </Accordion.Item>
-              </motion.div>
-            ))}
-          </Accordion.Root>
+            Before you download
+          </h2>
         </div>
 
-        {/* Contact CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          viewport={{ once: true }}
-          className="text-center mt-16"
-        >
-          <p className="text-muted-foreground mb-4">Still have questions?</p>
-          <a
-            href="mailto:hello@nutrichef.app"
-            className="inline-flex items-center space-x-2 text-primary hover:text-primary/80 transition-colors font-medium"
-          >
-            <span>Get in touch with our team</span>
-            <span>→</span>
-          </a>
-        </motion.div>
+        <div className="reveal mt-10 max-w-3xl">
+          <Accordion.Root type="single" collapsible className="divide-y divide-border border-y border-border">
+            {FAQS.map((faq, index) => (
+              <Accordion.Item key={faq.question} value={`item-${index}`}>
+                <Accordion.Header>
+                  <Accordion.Trigger className="group flex w-full items-center justify-between gap-4 py-5 text-left">
+                    <span className="font-display text-base font-semibold sm:text-lg">
+                      {faq.question}
+                    </span>
+                    <ChevronDown
+                      className="h-5 w-5 flex-none text-muted-foreground transition-transform duration-200 group-data-[state=open]:rotate-180 motion-reduce:transition-none"
+                      aria-hidden="true"
+                    />
+                  </Accordion.Trigger>
+                </Accordion.Header>
+                <Accordion.Content className="overflow-hidden data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp">
+                  <p className="pb-5 pr-8 leading-relaxed text-muted-foreground">
+                    {faq.answer}
+                  </p>
+                </Accordion.Content>
+              </Accordion.Item>
+            ))}
+          </Accordion.Root>
+
+          <p className="mt-8 text-muted-foreground">
+            Something else?{" "}
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="font-medium text-primary underline-offset-4 hover:underline"
+            >
+              Email us
+            </a>{" "}
+            — a real person reads every message.
+          </p>
+        </div>
       </div>
     </section>
   );

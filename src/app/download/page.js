@@ -2,99 +2,98 @@
 
 import { Header } from "../../components/Header";
 import { Footer } from "../../components/Footer";
-import { motion } from "framer-motion";
-import { ArrowLeft, Smartphone } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import Link from "next/link";
+import { APP_STORE_URL } from "../../lib/links";
 
 export default function Download() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="flex min-h-screen flex-col">
       <Header />
-      <main className="flex-grow pt-32 pb-20">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-3xl mx-auto"
-          >
+      <main id="main-content" className="flex-grow pb-20 pt-32">
+        <div className="container-page">
+          <div className="mx-auto max-w-3xl">
             <Link
               href="/"
-              className="inline-flex items-center text-muted-foreground hover:text-primary transition-colors mb-8 group"
+              className="group mb-8 inline-flex items-center text-muted-foreground transition-colors hover:text-primary"
             >
-              <ArrowLeft className="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform" />
-              Back to Home
+              <ArrowLeft
+                className="mr-2 h-4 w-4 transition-transform group-hover:-translate-x-1 motion-reduce:transition-none"
+                aria-hidden="true"
+              />
+              Back to home
             </Link>
 
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
-                <Smartphone className="w-6 h-6 text-primary" />
-              </div>
-              <h1 className="text-3xl md:text-4xl font-bold">
-                Download NutriChef
-              </h1>
-            </div>
-
-            <p className="text-lg text-muted-foreground mb-12">
-              Get NutriChef on your device and start tracking your nutrition
-              with ease.
+            <p className="eyebrow">Download</p>
+            <h1 className="mt-4 font-display text-3xl font-bold tracking-tight md:text-4xl">
+              Get NutriChef on your phone
+            </h1>
+            <p className="mb-12 mt-4 text-lg text-muted-foreground">
+              Available now for iPhone. Android is in development — the
+              waitlist hears first.
             </p>
 
             <div className="space-y-6">
-              {/* Apple Download Button */}
-              <motion.a
-                href="https://apps.apple.com/us/app/nutrichef-ai/id6755775670"
+              {/* iPhone */}
+              <a
+                href={APP_STORE_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-                className="block bg-card border border-border rounded-2xl p-8 shadow-sm hover:shadow-md transition-all hover:border-primary/50 group"
+                className="card-surface group block p-8 transition-colors hover:border-primary/60"
               >
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 bg-black dark:bg-white rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                    <i className="bi bi-apple text-white dark:text-black text-4xl"></i>
+                  <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-ink">
+                    <i
+                      className="bi bi-apple text-4xl text-white"
+                      aria-hidden="true"
+                    ></i>
                   </div>
                   <div className="flex-grow">
-                    <h2 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
-                      Download for Apple
+                    <h2 className="font-display text-2xl font-bold transition-colors group-hover:text-primary">
+                      Download for iPhone
                     </h2>
-                    <p className="text-muted-foreground">
-                      Available now on the App Store
+                    <p className="mt-1 text-muted-foreground">
+                      Free on the App Store
                     </p>
                   </div>
-                  <ArrowLeft className="w-6 h-6 text-muted-foreground rotate-180 group-hover:translate-x-2 transition-transform" />
+                  <ArrowRight
+                    className="h-6 w-6 text-muted-foreground transition-transform group-hover:translate-x-2 motion-reduce:transition-none"
+                    aria-hidden="true"
+                  />
                 </div>
-              </motion.a>
+              </a>
 
-              {/* Android Download Button (Waitlist) */}
-              <motion.a
-                href="/"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.2 }}
-                className="block bg-card border border-border rounded-2xl p-8 shadow-sm hover:shadow-md transition-all hover:border-primary/50 group"
+              {/* Android */}
+              <Link
+                href="/#waitlist"
+                className="card-surface group block p-8 transition-colors hover:border-primary/60"
               >
                 <div className="flex items-center gap-6">
-                  <div className="w-16 h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-2xl flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform">
-                    <i className="bi bi-android text-white text-4xl"></i>
+                  <div className="flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-2xl bg-secondary">
+                    <i
+                      className="bi bi-android2 text-4xl text-primary"
+                      aria-hidden="true"
+                    ></i>
                   </div>
                   <div className="flex-grow">
-                    <h2 className="text-2xl font-bold mb-2 group-hover:text-primary transition-colors">
-                      Download for Android
-                      <span className="ml-3 text-sm font-normal text-muted-foreground bg-muted px-3 py-1 rounded-full">
-                        Waitlist
+                    <h2 className="font-display text-2xl font-bold transition-colors group-hover:text-primary">
+                      Android
+                      <span className="ml-3 align-middle font-mono text-xs font-medium uppercase tracking-[0.14em] text-spice">
+                        [ waitlist ]
                       </span>
                     </h2>
-                    <p className="text-muted-foreground">
-                      Join the waitlist for early access
+                    <p className="mt-1 text-muted-foreground">
+                      In development — join the waitlist for launch news
                     </p>
                   </div>
-                  <ArrowLeft className="w-6 h-6 text-muted-foreground rotate-180 group-hover:translate-x-2 transition-transform" />
+                  <ArrowRight
+                    className="h-6 w-6 text-muted-foreground transition-transform group-hover:translate-x-2 motion-reduce:transition-none"
+                    aria-hidden="true"
+                  />
                 </div>
-              </motion.a>
+              </Link>
             </div>
-          </motion.div>
+          </div>
         </div>
       </main>
       <Footer />

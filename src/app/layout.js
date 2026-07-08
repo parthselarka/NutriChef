@@ -1,26 +1,46 @@
-import { Inter } from "next/font/google";
+import { Inter, Bricolage_Grotesque, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "../components/ThemeProvider";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+});
+
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  variable: "--font-bricolage",
+  display: "swap",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  variable: "--font-plex-mono",
+  display: "swap",
 });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
+export const viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#faf9f5" },
+    { media: "(prefers-color-scheme: dark)", color: "#0b1220" },
+  ],
+};
+
 export const metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Nutrichef — Indian Food Tracker & Calorie Counter",
-    template: "%s | Nutrichef",
+    default: "NutriChef — Calorie & Macro Tracker for Indian Food",
+    template: "%s | NutriChef",
   },
   description:
-    "Track macronutrients and calories for Indian food with AI-powered photo recognition. Made for Indians, by Indians. Join the waitlist for early access.",
+    "Snap a photo of your meal and NutriChef identifies the dish, estimates the portion, and logs calories, protein, carbs, and fat. Built for Indian cuisine. Free on the App Store for iPhone; Android waitlist open.",
   keywords: [
     "Indian food tracker",
     "Indian calorie tracker",
-    "Indian calories tracker",
     "Indian calorie counter",
     "Indian macro tracker",
     "Indian nutrition app",
@@ -35,9 +55,9 @@ export const metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Nutrichef — Indian Food Tracker & Calorie Counter",
+    title: "NutriChef — Calorie & Macro Tracker for Indian Food",
     description:
-      "Track macronutrients and calories for Indian food with AI-powered photo recognition. Join the waitlist!",
+      "Photo-first calorie and macro tracking built for Indian cuisine. Free on the App Store for iPhone; Android waitlist open.",
     type: "website",
     locale: "en_US",
     images: [
@@ -45,15 +65,15 @@ export const metadata = {
         url: "/logos/nutrichef-ai-high-resolution-logo-transparent.png",
         width: 1200,
         height: 630,
-        alt: "Nutrichef - Indian Food Tracking App",
+        alt: "NutriChef — Indian food tracking app",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nutrichef — Indian Food Tracker & Calorie Counter",
+    title: "NutriChef — Calorie & Macro Tracker for Indian Food",
     description:
-      "Track macronutrients and calories for Indian food with AI-powered photo recognition. Join the waitlist!",
+      "Photo-first calorie and macro tracking built for Indian cuisine. Free on the App Store for iPhone; Android waitlist open.",
     images: ["/logos/nutrichef-ai-high-resolution-logo-transparent.png"],
   },
   robots: {
@@ -69,59 +89,17 @@ export const metadata = {
   },
 };
 
+// Applies the saved theme before first paint to avoid a flash of the wrong theme.
+const themeInitScript = `(function(){try{var t=localStorage.getItem("nutrichef-theme");if(t!=="dark"&&t!=="light"){t="light"}var c=document.documentElement.classList;c.remove("light","dark");c.add(t);}catch(e){}})();`;
+
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="dark" suppressHydrationWarning>
+    <html lang="en" className="light" suppressHydrationWarning>
       <head>
-        {/* Preload key images to speed up LCP/first interaction */}
-        <link
-          rel="preload"
-          as="image"
-          href="/logos/nutrichef-ai-high-resolution-logo-transparent.png"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/Mockup%20screenshots/NC_light_SS-portrait.png"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/Mockup%20screenshots/NC_dark_SS-portrait.png"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/Mockup%20screenshots/scanner_light.png"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/Mockup%20screenshots/scanner_dark.png"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/Mockup%20screenshots/results_light.png"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/Mockup%20screenshots/results_dark.png"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/Mockup%20screenshots/updated_light.png"
-        />
-        <link
-          rel="preload"
-          as="image"
-          href="/Mockup%20screenshots/updated_dark.png"
-        />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
-      <body className={`${inter.variable} font-sans antialiased`}>
-        <ThemeProvider defaultTheme="dark" storageKey="nutrichef-theme">
+      <body className={`${inter.variable} ${bricolage.variable} ${plexMono.variable} font-sans antialiased`}>
+        <ThemeProvider defaultTheme="light" storageKey="nutrichef-theme">
           {children}
         </ThemeProvider>
       </body>

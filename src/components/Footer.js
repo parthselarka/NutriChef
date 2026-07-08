@@ -1,237 +1,128 @@
-"use client";
-
-import { motion } from "framer-motion";
-import { ArrowRight, Mail, Twitter, Instagram } from "lucide-react";
-import { useState } from "react";
-import { addToWaitlist } from "../lib/waitlist";
 import Image from "next/image";
 import Link from "next/link";
+import { Mail, Instagram } from "lucide-react";
+import { WaitlistForm } from "./WaitlistForm";
+import { APP_STORE_URL, CONTACT_EMAIL, INSTAGRAM_URL } from "../lib/links";
+
+const PRODUCT_LINKS = [
+  { href: "/#how-it-works", label: "How it works" },
+  { href: "/#features", label: "Features" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/download", label: "Download" },
+  { href: "/support", label: "Support" },
+  { href: "/privacy-policy", label: "Privacy policy" },
+];
 
 export function Footer() {
-  const [email, setEmail] = useState("");
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setError("");
-
-    try {
-      const result = await addToWaitlist(
-        email,
-        "footer",
-        navigator.userAgent,
-        // IP address will be handled server-side if needed
-        "",
-      );
-
-      if (result.success) {
-        setIsSubmitted(true);
-        setEmail("");
-        setTimeout(() => setIsSubmitted(false), 5000);
-      } else {
-        setError(result.error || "Failed to join waitlist");
-      }
-    } catch (err) {
-      setError("Something went wrong. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
-    <footer className="bg-muted/50 border-t">
-      {/* Final CTA Section */}
-      <section id="waitlist" className="py-20">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="text-center max-w-4xl mx-auto"
-          >
-            <h2 className="text-3xl md:text-5xl font-bold mb-6">
-              Ready to Transform Your
-              <span className="text-primary"> Indian Food Journey?</span>
+    <footer className="border-t border-border">
+      {/* Final CTA */}
+      <section
+        id="waitlist"
+        className="section scroll-mt-16"
+        aria-labelledby="cta-heading"
+      >
+        <div className="container-page">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="eyebrow reveal">Get NutriChef</p>
+            <h2
+              id="cta-heading"
+              className="reveal mt-4 font-display text-3xl font-bold tracking-tight sm:text-5xl"
+            >
+              Start with your next meal
             </h2>
-            <p className="text-xl text-muted-foreground mb-12 leading-relaxed">
-              Join thousands of Indians who are excited about finally having a
-              nutrition app that understands their food culture. Be the first to
-              know when we launch.
+            <p className="reveal mt-5 text-lg leading-relaxed text-muted-foreground">
+              Download NutriChef for iPhone, point it at your plate, and see
+              what’s really on it.
             </p>
 
-            {/* Why join benefits */}
-            <ul className="flex flex-wrap justify-center gap-x-10 gap-y-4 mb-12 text-muted-foreground">
-              <li className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-muted-foreground" />
-                Early access
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-muted-foreground" />
-                Help shape features
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-muted-foreground" />
-                No spam
-              </li>
-            </ul>
-
-            {/* Email Signup */}
-            <div className="max-w-lg mx-auto mb-8">
-              {!isSubmitted ? (
-                <>
-                  <form
-                    onSubmit={handleSubmit}
-                    className="flex flex-col sm:flex-row gap-4"
-                  >
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email for early access"
-                      required
-                      disabled={isLoading}
-                      className="flex-1 px-6 py-4 rounded-lg border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring disabled:opacity-50"
-                    />
-                    <button
-                      type="submit"
-                      disabled={isLoading}
-                      className="bg-primary text-primary-foreground px-8 py-4 rounded-lg hover:bg-primary/90 transition-colors font-medium flex items-center justify-center space-x-2 disabled:opacity-50"
-                    >
-                      <span>
-                        {isLoading ? "Joining..." : "Get Early Access"}
-                      </span>
-                      {!isLoading && <ArrowRight className="w-4 h-4" />}
-                    </button>
-                  </form>
-                  {error && (
-                    <div className="mt-4 p-3 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-800 rounded-lg">
-                      <p className="text-red-700 dark:text-red-400 text-sm">
-                        {error}
-                      </p>
-                    </div>
-                  )}
-                </>
-              ) : (
-                <div className="bg-secondary border border-border rounded-lg p-6">
-                  <p className="text-secondary-foreground font-medium text-lg">
-                    🎉 Welcome to the family!
-                  </p>
-                  <p className="text-muted-foreground mt-2">
-                    You'll be among the first to try Nutrichef when we launch.
-                  </p>
-                </div>
-              )}
+            <div className="reveal mt-8 flex justify-center">
+              <a
+                href={APP_STORE_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary btn-lg"
+              >
+                <i className="bi bi-apple text-lg" aria-hidden="true"></i>
+                <span>Download on the App Store</span>
+              </a>
             </div>
 
-            <p className="text-sm text-muted-foreground">
-              🔒 Your email is safe with us. We'll only send updates about
-              Nutrichef.
-            </p>
-          </motion.div>
+            <div className="reveal mx-auto mt-12 max-w-md border-t border-border pt-8 text-left">
+              <h3 className="font-display text-base font-semibold">
+                Using Android?
+              </h3>
+              <p className="mb-4 mt-1 text-sm text-muted-foreground">
+                Leave your email and you’ll hear the moment the Android
+                version ships. No other mail, ever.
+              </p>
+              <WaitlistForm source="footer" buttonLabel="Notify me" />
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Footer Links */}
-      <div className="border-t border-border">
-        <div className="container mx-auto px-4 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Brand */}
-            <div className="md:col-span-2">
-              <div className="flex items-center space-x-3 mb-4">
-                <Image
-                  src="/logos/nutrichef-ai-high-resolution-logo-transparent.png"
-                  alt="Nutrichef Logo"
-                  width={120}
-                  height={40}
-                  className="h-10 w-auto"
-                />
-              </div>
-              <p className="text-muted-foreground mb-6 max-w-md">
-                India's first AI-powered nutrition app designed specifically for
-                Indian cuisine. Track your food, your way.
+      {/* Footer proper */}
+      <div className="border-t border-border bg-muted">
+        <div className="container-page py-12">
+          <div className="grid gap-10 md:grid-cols-[1fr_auto]">
+            <div className="max-w-sm">
+              <Image
+                src="/logos/nutrichef-ai-high-resolution-logo-transparent.png"
+                alt="NutriChef logo"
+                width={120}
+                height={40}
+                className="h-9 w-auto"
+              />
+              <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                Photo-first calorie and macro tracking built for Indian
+                cuisine. Free on the App Store for iPhone.
               </p>
-              <div className="flex space-x-4">
+              <div className="mt-5 flex gap-4">
                 <a
-                  href="mailto:parthselarka2006@gmail.com"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  href={`mailto:${CONTACT_EMAIL}`}
+                  className="text-muted-foreground transition-colors hover:text-primary"
+                  aria-label="Email NutriChef"
                 >
-                  <Mail className="w-5 h-5" />
+                  <Mail className="h-5 w-5" aria-hidden="true" />
                 </a>
                 <a
-                  href="https://www.instagram.com/parth_builds_stuff/"
-                  className="text-muted-foreground hover:text-primary transition-colors"
+                  href={INSTAGRAM_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground transition-colors hover:text-primary"
+                  aria-label="NutriChef on Instagram"
                 >
-                  <Instagram className="w-5 h-5" />
+                  <Instagram className="h-5 w-5" aria-hidden="true" />
                 </a>
               </div>
             </div>
 
-            {/* Product */}
-            <div>
-              <h4 className="font-semibold mb-4">Product</h4>
-              <ul className="space-y-2 text-muted-foreground">
-                <li>
-                  <a
-                    href="#features"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Features
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#why-nutrichef"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Why Nutrichef
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#waitlist"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Join Waitlist
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Roadmap
-                  </a>
-                </li>
-                <li>
-                  <Link
-                    href="/support"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Support
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="/privacy-policy"
-                    className="hover:text-foreground transition-colors"
-                  >
-                    Privacy Policy
-                  </Link>
-                </li>
+            <nav aria-label="Footer">
+              <h3 className="font-mono text-xs uppercase tracking-[0.14em] text-muted-foreground">
+                Product
+              </h3>
+              <ul className="mt-4 space-y-2.5">
+                {PRODUCT_LINKS.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="text-sm text-foreground/80 transition-colors hover:text-foreground"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
               </ul>
-            </div>
+            </nav>
           </div>
 
-          <div className="border-t border-border mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-muted-foreground text-sm">
-              Nutrichef. Made with ❤️ in India.
+          <div className="mt-12 flex flex-col gap-2 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
+            <p className="text-sm text-muted-foreground">
+              © {new Date().getFullYear()} NutriChef. Made with ❤️ in India.
             </p>
-            <p className="text-muted-foreground text-sm mt-4 md:mt-0">
-              Built for Indians, by Indians 🇮🇳
+            <p className="font-mono text-xs tracking-wide text-muted-foreground">
+              [ point · confirm · done ]
             </p>
           </div>
         </div>

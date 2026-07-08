@@ -1,6 +1,6 @@
 export default async function sitemap() {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-  const routes = ["/", "/#features", "/#why-nutrichef", "/#waitlist"].map(
+  const routes = ["/", "/download", "/support", "/privacy-policy"].map(
     (route) => ({
       url: `${baseUrl}${route}`,
       lastModified: new Date().toISOString(),

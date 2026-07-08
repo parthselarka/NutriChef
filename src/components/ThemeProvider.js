@@ -4,49 +4,42 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const ThemeProviderContext = createContext();
 
+function getStoredTheme(storageKey, fallback) {
+  if (typeof window === "undefined") return fallback;
+  try {
+    const stored = localStorage.getItem(storageKey);
+    if (stored === "light" || stored === "dark") return stored;
+  } catch (e) {
+    // localStorage unavailable — fall through to default
+  }
+  return fallback;
+}
+
 export function ThemeProvider({
   children,
-  defaultTheme = "dark",
+  defaultTheme = "light",
   storageKey = "nutrichef-theme",
   ...props
 }) {
-  const [theme, setTheme] = useState(defaultTheme);
+  const [theme, setTheme] = useState(() =>
+    getStoredTheme(storageKey, defaultTheme)
+  );
 
   useEffect(() => {
     const root = window.document.documentElement;
-
-    // Use requestAnimationFrame to avoid blocking animations
-    requestAnimationFrame(() => {
-      root.classList.remove("light", "dark");
-
-      if (theme === "system") {
-        const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-          .matches
-          ? "dark"
-          : "light";
-        root.classList.add(systemTheme);
-        return;
-      }
-
-      root.classList.add(theme);
-    });
+    root.classList.remove("light", "dark");
+    root.classList.add(theme);
   }, [theme]);
-
-  useEffect(() => {
-    const stored = localStorage.getItem(storageKey);
-    if (stored) {
-      setTheme(stored);
-    } else {
-      // Default to dark theme if no preference is stored
-      setTheme("dark");
-    }
-  }, [storageKey]);
 
   const value = {
     theme,
-    setTheme: (theme) => {
-      localStorage.setItem(storageKey, theme);
-      setTheme(theme);
+    setTheme: (next) => {
+      try {
+        localStorage.setItem(storageKey, next);
+      } catch (e) {
+        // ignore storage failures
+      }
+      setTheme(next);
     },
   };
 
